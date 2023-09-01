@@ -1,28 +1,28 @@
+
 import java.net.*;
 import java.io.*;
-class Server{
+class Client{
 
-    ServerSocket serverSocket;
     Socket socket;
     BufferedReader br;
     PrintWriter out;
-
-    public Server(){
+    Client(){
         try {
+            System.out.println("Sending Request to erver");
+            socket=new Socket("127.0.0.1",7777);
+            System.out.println("Connection done");
 
-            serverSocket=new ServerSocket(7777);
-            System.out.println("Server is Ready");
-            System.out.println("Waiting");
-            socket=serverSocket.accept();
             br= new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out=new PrintWriter(socket.getOutputStream());
 
             stratReading();
             stratWritig();
-        } catch (IOException e) {
+
+
+
+        }catch (Exception e ){
             e.printStackTrace();
         }
-
     }
     public void stratReading(){
         System.out.println("Strat Reading");
@@ -31,10 +31,10 @@ class Server{
                 try {
                     String msg=br.readLine();
                     if(msg.equals("exit")){
-                        System.out.println("Client  has Stopped");
+                        System.out.println("Server  has Stopped");
                         break;
                     }
-                    System.out.println("Client :-"+msg);
+                    System.out.println("Server :-"+msg);
                 }catch (Exception e ){
                     e.printStackTrace();
                 }
@@ -65,9 +65,8 @@ class Server{
 
     }
 
-
     public static void main(String[] args) {
         System.out.println("Maiin");
-        new Server();
+        new Client();
     }
 }
